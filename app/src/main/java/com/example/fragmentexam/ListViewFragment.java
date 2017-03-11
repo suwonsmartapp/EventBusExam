@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,19 +45,8 @@ public class ListViewFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (mListener != null) {
-            mListener.onMyClick(view, position);
-        }
+        // MainActivity#onMyEvent()
+        EventBus.getDefault().post(new MyEvent(view, position));
     }
 
-
-    public interface OnMyClickListener {
-        void onMyClick(View view, int position);
-    }
-
-    private OnMyClickListener mListener;
-
-    public void setOnMyClickListener(OnMyClickListener listener) {
-        mListener = listener;
-    }
 }
